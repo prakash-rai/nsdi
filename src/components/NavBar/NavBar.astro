@@ -1,0 +1,44 @@
+---
+import HamburgerMenu from "./HamburgerMenu.astro";
+import MenuList from "./MenuList.astro";
+---
+
+<nav class="bg-white border border-gray-200">
+  <div class="flex items-center justify-between px-2 md:px-4 py-2">
+    <!-- Logo and Title -->
+    <a href="/" class="flex items-center space-x-1 md:space-x-3">
+      <img src="/favicon.svg" class="h-7 xs:h-9" alt="Logo" />
+      <span
+        class="text-md xs:text-xl md:text-2xl text-primary-600 font-semibold whitespace-nowrap"
+        >Bhutan NSDI System</span
+      >
+    </a>
+
+    <div class="flex items-center md:order-2 space-x-3">
+      <a
+        href="/map"
+        class="inline-flex items-center space-x-1 md:space-x-3 text-white bg-primary hover:bg-primary-550 font-medium rounded-lg px-2 py-2 md:px-4 lg:px-6"
+        aria-label="Map"
+      >
+        <!-- SVG Icon -->
+        <svg
+          class="w-4 h-4 md:w-5 md:h-5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 -960 960 960"
+        >
+          <path
+            d="m600-144-240-72-153 51q-23 8-43-6t-20-40v-498q0-16 9.5-28.5T177-755l183-61 240 72 153-51q23-10 43 5t20 41v498q0 16-9 29t-24 17l-183 61Zm-36-86v-450l-168-50v450l168 50Zm72-2 108-36v-448l-108 36v448Zm-420-12 108-36v-448l-108 36v448Zm420-436v448-448Zm-312-48v448-448Z"
+          ></path>
+        </svg>
+        <!-- Button Text -->
+        <span class="text-xs md:text-sm">Map</span>
+      </a>
+
+      <!-- Hamburgar Menu -->
+      <HamburgerMenu />
+    </div>
+    <MenuList />
+  </div>
+</nav>

@@ -1,0 +1,24 @@
+---
+import SideBar from "../../components/SideBar.astro";
+import Layout from "../../layouts/Layout.astro";
+import DataFrame from "../../components/DataFrame.astro";
+import { loadMemberAgencies } from "../../stores/memberAgencies";
+import { getCategoriesCounts } from "../../stores/portalItems";
+import { portalItemStore } from "../../stores/portalItems";
+
+const { category } = Astro.params;
+
+await loadMemberAgencies();
+const dataCounts = await getCategoriesCounts();
+const data = portalItemStore.get().filter((item) => {
+  return item.categories?.includes("/Categories/" + category);
+});
+---
+
+<Layout>
+  <div class="flex h-[calc(100vh-94px)]">
+    <div class="flex flex-col"></div>
+    <SideBar dataCategories={dataCounts} />
+    <DataFrame dataItems={data} />
+  </div>
+</Layout>

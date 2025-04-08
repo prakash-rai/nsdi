@@ -1,11 +1,133 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import Section from "../components/Section.astro";
+import { Image } from "astro:assets";
+import heroBackground from "../assets/Hero.png";
+import Carousel from "../components/Carousel.astro";
+import FeatureClass from "../components/FeatureClass.astro";
 ---
 
 <Layout>
-	<Welcome />
+  <!-- Hero Section -->
+  <section class="relative w-full">
+    <Image
+      src={heroBackground}
+      alt="Hero Background"
+      class="w-full h-[260px] sm:h-[400px] xl:h-[480px] object-cover transition-[height] duration-100 ease-in-out"
+    />
+
+    <div
+      class="min-w-[280px] xs:min-w-[380px] sm:min-w-[580px] xl:min-w-[1000px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center"
+    >
+      <h1
+        class="mb-4 lg:mb-8 text-base sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold tracking-wide text-white"
+      >
+        HARNESS THE POTENTIAL OF GEOSPATIAL INTELLIGENCE
+      </h1>
+      <p
+        class="mb-6 lg:mb-14 text-base sm:text-lg lg:text-xl font-normal xl:max-w-[600px] xl:mx-auto text-primary-200"
+      >
+        "Explore, Download and Utilize Geospatial Data for Planning and Informed
+        Decision Making"
+      </p>
+      <a
+        href="/data"
+        class="px-4 py-2 sm:px-8 sm:py-3 text-sm md:text-base font-medium text-white bg-primary-400 rounded-lg hover:bg-primary-500"
+      >
+        Explore Data
+      </a>
+    </div>
+  </section>
+
+  <!-- Member Agencies section -->
+
+  <Section>
+    <Fragment slot="header"> Member Agencies </Fragment>
+    <Fragment slot="subtext">
+      The following member agencies are publishing and maintaining geospatial
+      data into this platform
+    </Fragment>
+
+    <Carousel />
+    <div class="max-w-screen-xl mx-auto text-center pt-6">
+      <dl
+        class="grid max-w-screen-xs lg:max-w-screen-sm gap-8 mx-auto text-primary-500 grid-cols-2 lg:grid-cols-4"
+      >
+        <div class="flex flex-col items-center justify-center">
+          <dt class="mb-2 text-3xl md:text-4xl font-extrabold">12</dt>
+          <dd class="font-light text-primary-500">Member Agencies</dd>
+        </div>
+        <div class="flex flex-col items-center justify-center">
+          <dt class="mb-2 text-3xl md:text-4xl font-extrabold">100</dt>
+          <dd class="font-light text-primary-500">Open Data</dd>
+        </div>
+        <div class="flex flex-col items-center justify-center">
+          <dt class="mb-2 text-3xl md:text-4xl font-extrabold">27</dt>
+          <dd class="font-light text-primary-500">Common Data</dd>
+        </div>
+        <div class="flex flex-col items-center justify-center">
+          <dt class="mb-2 text-3xl md:text-4xl font-extrabold">27</dt>
+          <dd class="font-light text-primary-500">Restricted Data</dd>
+        </div>
+      </dl>
+    </div>
+  </Section>
+
+  <!-- Features Section -->
+
+  <Section dark={true}>
+    <Fragment slot="header"> Features </Fragment>
+    <Fragment slot="subtext">
+      Tools to help you find and Utilize Geospatial data
+    </Fragment>
+    <div class="flex flex-col md:flex-row gap-4 justify-between">
+      <!-- Explore Feature -->
+      <FeatureClass>
+        <Fragment slot="icon">
+          <path d="M0 0h24v24H0z" fill="none"></path><path
+            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+          ></path>
+        </Fragment>
+        <Fragment slot="title"> Explore Data </Fragment>
+        <Fragment slot="text">
+          Explore and navigate data based on ISO catogory themes or search using
+          keywords
+        </Fragment>
+      </FeatureClass>
+
+      <!-- Metadata Feature -->
+      <FeatureClass>
+        <Fragment slot="icon">
+          <path d="M0 0h24v24H0z" fill="none"></path><path
+            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+          ></path>
+        </Fragment>
+
+        <Fragment slot="title"> Read Metadata </Fragment>
+        <Fragment slot="text">
+          Access detailed metadata for each dataset to understand its context,
+          accuracy, purpose and usecases
+        </Fragment>
+      </FeatureClass>
+
+      <!-- Preview and Download Feature -->
+      <FeatureClass>
+        <Fragment slot="icon">
+          <path d="M0 0h24v24H0z" fill="none"></path><path
+            d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path>
+        </Fragment>
+
+        <Fragment slot="title"> Preview or Download Data </Fragment>
+        <Fragment slot="text">
+          Access detailed metadata for each dataset to understand its context,
+          accuracy, purpose and usecases
+        </Fragment>
+      </FeatureClass>
+    </div>
+  </Section>
+
+  <Section>
+    <Fragment slot="header"> About </Fragment>
+    <Fragment slot="subtext"> Portal is nothing dssdf sddfsfd </Fragment>
+  </Section>
 </Layout>

@@ -1,0 +1,102 @@
+---
+import type { IItem } from "@esri/arcgis-rest-portal";
+import { stripHtmlTags } from "../utility/utilityFunctions";
+import {
+  memberAgenciesStore,
+  loadMemberAgencies,
+} from "../stores/memberAgencies";
+
+interface Props {
+  dataItem: IItem;
+}
+
+const portalUrl = import.meta.env.PORTAL_URL;
+
+const { dataItem } = Astro.props as Props;
+
+const getThumbnailUrl = (item: IItem) =>
+  `${portalUrl}/sharing/rest/content/items/${item.id}/info/${item.thumbnail}`;
+
+await loadMemberAgencies();
+
+const dataOwner =
+  memberAgenciesStore
+    .get()
+    .find((memberAgency) => memberAgency.owner === dataItem.owner)?.title ??
+  dataItem.owner;
+
+function metadataUrl(): string {
+  return `https://nsdi.systems.gov.bt/portal/sharing/rest/content/items/${dataItem.id}/info/metadata/metadata.xml?format=default&output=html`;
+}
+---
+
+<div
+  class="flex w-full flex-col items-center border border-gray-200 rounded-lg text-justify shadow-sm md:flex-row shrink-0"
+>
+  <img
+    class="object-cover w-full rounded-t-lg md:w-64 md:h-full md:rounded-none md:rounded-s-lg shrink-0"
+    src={getThumbnailUrl(dataItem)}
+    alt="Thumbnail Image"
+  />
+  <div class="flex flex-col justify-between px-6 pt-4 leading-normal w-full">
+    <h6 class="text-primary-600 font-medium text-sm">
+      {dataOwner}
+    </h6>
+    <h5 class="mb-2 text-2xl font-medium tracking-tight text-primary-700">
+      {dataItem.title}
+    </h5>
+    <p class="font-normal text-primary-600 pb-3">
+      {stripHtmlTags(dataItem.description ?? "No descriptions available")}
+    </p>
+    <hr class="border-t border-x-primary-250 py-0" />
+    <div class="flex gap-6 items-center">
+      <p class="text-sm font-medium text-primary-600">
+        Views: {dataItem.numViews}
+      </p>
+      <a
+        class="flex hover:bg-primary-150 py-2 px-4 my-1 text-primary-600 font-medium"
+        href="#"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 mr-2 text-primary-550"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          ><path d="M0 0h24v24H0z" fill="none"></path><path
+            d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"
+          ></path></svg
+        >
+        Preview</a
+      >
+      <a
+        class="flex hover:bg-primary-150 py-2 px-4 my-1 text-primary-600 font-medium"
+        href={metadataUrl()}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 mr-2 text-primary-550"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          ><path d="M0 0h24v24H0z" fill="none"></path><path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+          ></path></svg
+        >
+        Metadata</a
+      >
+      <a
+        class="flex hover:bg-primary-150 py-2 px-4 my-1 text-primary-600 font-medium"
+        href="#"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 mr-2 text-primary-550"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          ><path d="M0 0h24v24H0z" fill="none"></path><path
+            d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path></svg
+        >
+        Download</a
+      >
+    </div>
+  </div>
+</div>
