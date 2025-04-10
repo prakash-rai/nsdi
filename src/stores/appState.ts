@@ -1,5 +1,5 @@
 import { atom } from "nanostores";
-import { type CategoryCount, getCategoriesCounts } from "../stores/portalItems"
+import { getCategoriesCounts } from "../stores/portalItems"
 
 type appState = {
     activeCategory?: string;
@@ -8,7 +8,7 @@ type appState = {
 
 export const appStateStore = atom<appState>({});
 
-export function setActiveCatogory(category: string) {
+export function setActiveCatogory(category: string | undefined) {
     appStateStore.set({ activeCategory: category })
 }
 

@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { dataCategories } = Astro.props as Props;
+const { category } = Astro.params;
 ---
 
 <aside
@@ -34,25 +35,28 @@ const { dataCategories } = Astro.props as Props;
     <ul class="font-medium">
       {
         dataCategories.map((item) => (
-          <li
-            data-category={item.category}
-            class="category flex items-center py-2 px-5 text-primary-700 hover:bg-primary-250"
-          >
-            <span class="flex-1">{getCategoryLabel(item.category)}</span>
-            <span class="flex items-center text-primary-700 bg-white text-[0.9rem] font-semibold rounded-full px-3 py-1 border border-gray-100">
-              <svg
-                class="w-5 h-5 mr-2"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentcolor"
-              >
-                <>
-                  <path d="M0 0h24v24H0z" fill="none" />
-                  <path d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z" />
-                </>
-              </svg>
-              {item.counts}
-            </span>
+          <li>
+            <a
+              data-category={getCategoryLabel(item.category)}
+              href={"/data/" + getCategoryLabel(item.category)}
+              class={`category flex items-center py-2 px-5  ${category == getCategoryLabel(item.category) ? "bg-primary-600 text-primary-100" : "text-primary-700 hover:bg-primary-250"}`}
+            >
+              <span class="flex-1">{getCategoryLabel(item.category)}</span>
+              <span class="flex items-center text-primary-700 bg-white text-[0.9rem] font-semibold rounded-full px-3 py-1 border border-gray-100">
+                <svg
+                  class="w-5 h-5 mr-2"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentcolor"
+                >
+                  <>
+                    <path d="M0 0h24v24H0z" fill="none" />
+                    <path d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z" />
+                  </>
+                </svg>
+                {item.counts}
+              </span>
+            </a>
           </li>
         ))
       }
@@ -61,33 +65,16 @@ const { dataCategories } = Astro.props as Props;
 </aside>
 
 <script>
-  import { setActiveCatogory } from "../stores/appState";
+  import { getActiveCatogory, setActiveCatogory } from "../stores/appState";
+
   const categoryElements = document.querySelectorAll(".category");
-  const firstEl = categoryElements[0];
-  firstEl.classList.remove("text-primary-700", "hover:bg-primary-250");
-  firstEl.classList.add("bg-primary-600", "text-primary-100", "activeCategory");
-
-  categoryElements.forEach((el) => {
-    if (el instanceof HTMLElement) {
-      el.addEventListener("click", async () => {
-        const preActiveEl = document.querySelector(".activeCategory");
-
-        preActiveEl?.classList.remove(
-          "bg-primary-600",
-          "text-primary-100",
-          "activeCategory",
-        );
-
-        preActiveEl?.classList.add("text-primary-700", "hover:bg-primary-250");
-
-        el.classList.remove("text-primary-700", "hover:bg-primary-250");
-        el.classList.add(
-          "bg-primary-600",
-          "text-primary-100",
-          "activeCategory",
-        );
-        if (el.dataset.category) setActiveCatogory(el.dataset.category);
-      });
-    }
+  categoryElements.forEach((categoryElement) => {
+    categoryElement.addEventListener("click", async () => {
+      if (categoryElement instanceof HTMLElement) {
+        setActiveCatogory(categoryElement.dataset.category);
+        const a = await getActiveCatogory();
+        console.log(a);
+      }
+    });
   });
 </script>

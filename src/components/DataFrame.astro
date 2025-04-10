@@ -1,8 +1,6 @@
 ---
 import Title from "./Title.astro";
 import DataCard from "./DataCard.astro";
-import { getActiveCatogory } from "../stores/appState";
-import { getCategoryLabel } from "../utility/utilityFunctions";
 
 import type { IItem } from "@esri/arcgis-rest-portal";
 
@@ -10,12 +8,12 @@ interface Props {
   dataItems: IItem[];
 }
 const { dataItems } = Astro.props as Props;
-const title = getCategoryLabel((await getActiveCatogory()) ?? "");
+const { category } = Astro.params;
 ---
 
 <section
   class="p-4 flex-1 sm:ml-[64] gap-5 flex flex-col items-center overflow-auto"
 >
-  <Title>{title}</Title>
+  <Title>{category}</Title>
   {dataItems.map((item) => <DataCard dataItem={item} />)}
 </section>
